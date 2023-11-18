@@ -10,4 +10,5 @@ class RegionType extends Model
     use HasFactory;
 
     protected $table = 'region_types';
+    protected $fillable = ['id', 'name'];
 }
