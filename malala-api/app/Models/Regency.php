@@ -10,4 +10,5 @@ class Regency extends Model
     use HasFactory;
 
     protected $table = 'regencies';
+    protected $fillable = ['id', 'name', 'province_id', 'region_type_id'];
 }
