@@ -25,5 +25,6 @@ Route::apiResource('destinations', TouristAttractionController::class);
 Route::prefix('destinations/{destinationId}/images')->group(function() {
     Route::get('', [TouristAttractionImageController::class, 'index']);
     Route::post('', [TouristAttractionImageController::class, 'store']);
+    Route::put('', [TouristAttractionImageController::class, 'setProfile']);
     Route::delete('', [TouristAttractionImageController::class, 'delete']);
 });
