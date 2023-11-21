@@ -78,6 +78,46 @@ class TouristAttractionImageController extends Controller
         }
     }
 
+    public function setProfile(Request $request, String $destinationId)
+    {
+        try {
+            DB::transaction(function() use ($request, $destinationId) {
+                $imageId = $request->imageId;
+                $image = $this->touristAttractionImageModel::find($imageId);
+                if (!$image) {
+                    throw new \Exception('Data gambar tidak ditemukan.', 404);
+                }
+                $activeProfileImage = $this->touristAttractionImageModel::where('tourist_attraction_id', $destinationId)
+                                                                            ->where('profile', true)
+                                                                            ->first();
+
+                if (!$activeProfileImage) {
+                    throw new \Exception('Data profile active tidak ditemukan.', 404);
+                }
+
+                if ($activeProfileImage && $activeProfileImage->id == $imageId) {
+                    throw new \Exception('Gambar ini sudah menjadi default profile.', 400);
+                }
+
+                $image->update(['profile' => true]);
+                $activeProfileImage->update(['profile' => false]);
+            });
+    
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Gambar berhasil di jadikan profile',
+            ]);
+        } catch (\Exception $e) {
+            $statusCode = $e->getCode() ?: 500;
+            $message = $e->getMessage() ?: 'Terjadi kesalahan dalam proses mengubah gambar profile.';
+
+            return response()->json([
+                'status'    => 'fail',
+                'message'   => $message,
+            ], $statusCode);
+        }
+    }
+    
     public function delete(Request $request, string $destinationId)
     {
         try {
