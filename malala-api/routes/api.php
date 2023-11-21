@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TouristAttractionController;
+use App\Http\Controllers\Api\TouristAttractionImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('destinations', TouristAttractionController::class);
+
+Route::prefix('destinations/{destinationId}/images')->group(function() {
+    Route::get('', [TouristAttractionImageController::class, 'index']);
+    Route::post('', [TouristAttractionImageController::class, 'store']);
+    Route::delete('', [TouristAttractionImageController::class, 'delete']);
+});
