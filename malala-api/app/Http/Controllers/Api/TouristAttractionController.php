@@ -4,17 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Models\TouristAttraction;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\TouristAttractionImage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\TouristAttractionResource;
 
 class TouristAttractionController extends Controller
 {
     protected $touristAttractionModel;
+    protected $touristAttractionImageModel;
 
     public function __construct()
     {
         $this->touristAttractionModel = new TouristAttraction();
+        $this->touristAttractionImageModel = new TouristAttractionImage();
     }
     
     /**
@@ -39,7 +43,7 @@ class TouristAttractionController extends Controller
             $query = $this->touristAttractionModel;
         }
 
-        $destinations = $query->paginate(15);
+        $destinations = $query->with('images')->paginate(15);
 
         return new TouristAttractionResource('success', 'List Data Tempat Wisata', $destinations);
     }
@@ -61,6 +65,7 @@ class TouristAttractionController extends Controller
                 'regency_id'    => 'required',
                 'district_id'   => 'required',
                 'village_id'    => 'required',
+                'image'         => 'required|image|mimes:jpg,png,jpeg,webp|max:5120',
             ]);
 
             if ($validate->fails()) {
@@ -70,18 +75,31 @@ class TouristAttractionController extends Controller
                 ], 400);
             }
 
-            $destination = $this->touristAttractionModel::create([
-                'name'          => $request->name,
-                'description'   => $request->description,
-                'price'         => $request->price,
-                'contact'       => $request->contact,
-                'address'       => $request->address,
-                'link_map'      => $request->link_map,
-                'province_id'   => $request->province_id,
-                'regency_id'    => $request->regency_id,
-                'district_id'   => $request->district_id,
-                'village_id'    => $request->village_id,
-            ]);
+            $destination = null;
+
+            DB::transaction(function() use ($request, &$destination) {
+                $destination = $this->touristAttractionModel::create([
+                    'name'          => $request->name,
+                    'description'   => $request->description,
+                    'price'         => $request->price,
+                    'contact'       => $request->contact,
+                    'address'       => $request->address,
+                    'link_map'      => $request->link_map,
+                    'province_id'   => $request->province_id,
+                    'regency_id'    => $request->regency_id,
+                    'district_id'   => $request->district_id,
+                    'village_id'    => $request->village_id,
+                ]);
+    
+                $image = $request->file('image');
+                $image->storeAs('public/images/tourist_attraction', $image->hashName());
+    
+                $this->touristAttractionImageModel::create([
+                    'name' => $image->hashName(),
+                    'profile' => true,
+                    'tourist_attraction_id' => $destination->id,
+                ]);
+            });
 
             return response()->json([
                 'status'    => 'success',
@@ -95,7 +113,8 @@ class TouristAttractionController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'status'    => 'fail',
-                'message'   => 'Data wisata gagal ditambahkan.',
+                'message'   => 'Data wisata gagal ditambahkan. ',
+                'error'     => '' . $th,
             ], 500);
         }
     }
@@ -106,7 +125,7 @@ class TouristAttractionController extends Controller
     public function show(string $id)
     {
         try {
-            $destination = $this->touristAttractionModel::findOrFail($id);
+            $destination = $this->touristAttractionModel::with('images')->findOrFail($id);
             return response()->json([
                 'status'    => 'success',
                 'data'      => $destination,
