@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\TouristAttraction;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\Models\TouristAttractionImage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Api\BaseApiController;
 use App\Http\Resources\TouristAttractionResource;
 
-class TouristAttractionController extends Controller
+class TouristAttractionController extends BaseApiController
 {
     protected $touristAttractionModel;
     protected $touristAttractionImageModel;
@@ -20,32 +20,40 @@ class TouristAttractionController extends Controller
         $this->touristAttractionModel = new TouristAttraction();
         $this->touristAttractionImageModel = new TouristAttractionImage();
     }
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $query = $this->touristAttractionModel;
-        if ($request->name && $request->regency) {
-            $query = $query->where('name', 'like', '%' . $request->name .'%')
-                            ->where('regency_id', $request->regency);
-        } else if ($request->name && $request->province) {
-            $query = $query->where('name', 'like', '%' . $request->name .'%')
-                            ->where('province_id', $request->province);
-        } else if ($request->name) {
-            $query = $query->where('name', 'like', '%' . $request->name .'%');
-        } else if ($request->province) {
-            $query = $query->where('province_id', $request->province);
-        } else if ($request->regency) {
-            $query = $query->where('regency_id', $request->regency);
-        } else {
+        try {
             $query = $this->touristAttractionModel;
+            if ($request->name && $request->regency) {
+                $query = $query->where('name', 'like', '%' . $request->name . '%')
+                                ->where('regency_id', $request->regency);
+            } else if ($request->name && $request->province) {
+                $query = $query->where('name', 'like', '%' . $request->name . '%')
+                                ->where('province_id', $request->province);
+            } else if ($request->name) {
+                $query = $query->where('name', 'like', '%' . $request->name . '%');
+            } else if ($request->province) {
+                $query = $query->where('province_id', $request->province);
+            } else if ($request->regency) {
+                $query = $query->where('regency_id', $request->regency);
+            } else {
+                $query = $this->touristAttractionModel;
+            }
+
+            $destinations = $query->with('images')->paginate(15);
+
+            if ($destinations->count() < 1) {
+                throw new \Exception('Data tidak ditemukan', 404);
+            }
+
+            return $this->jsonResponse('success', 'Data tempat wisata', $destinations);
+        } catch (\Exception $e) {
+            return $this->handleException($e);
         }
-
-        $destinations = $query->with('images')->paginate(15);
-
-        return new TouristAttractionResource('success', 'List Data Tempat Wisata', $destinations);
     }
 
     /**
@@ -69,15 +77,12 @@ class TouristAttractionController extends Controller
             ]);
 
             if ($validate->fails()) {
-                return response()->json([
-                    'status'    => 'fail',
-                    'error'   => $validate->errors(),
-                ], 400);
+                return $this->jsonResponse('fail', $validate->errors(), null, 400);
             }
 
             $destination = null;
 
-            DB::transaction(function() use ($request, &$destination) {
+            DB::transaction(function () use ($request, &$destination) {
                 $destination = $this->touristAttractionModel::create([
                     'name'          => $request->name,
                     'description'   => $request->description,
@@ -90,10 +95,10 @@ class TouristAttractionController extends Controller
                     'district_id'   => $request->district_id,
                     'village_id'    => $request->village_id,
                 ]);
-    
+
                 $image = $request->file('image');
                 $image->storeAs('public/images/tourist_attraction', $image->hashName());
-    
+
                 $this->touristAttractionImageModel::create([
                     'name' => $image->hashName(),
                     'profile' => true,
@@ -101,21 +106,13 @@ class TouristAttractionController extends Controller
                 ]);
             });
 
-            return response()->json([
-                'status'    => 'success',
-                'message'   => 'Data wisata berhasil ditambahkan.',
-                'data'      => [
-                    'id'            => $destination->id,
-                    'name'          => $destination->name,
-                    'description'   => $destination->description,
-                ],
+            return $this->jsonResponse('success', 'Data wisata berhasil ditambahkan.', [
+                'id'            => $destination->id,
+                'name'          => $destination->name,
+                'description'   => $destination->description,
             ], 201);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status'    => 'fail',
-                'message'   => 'Data wisata gagal ditambahkan. ',
-                'error'     => '' . $th,
-            ], 500);
+        } catch (\Exception $e) {
+            return $this->handleException($e, 'Terjadi kesalahan dalam proses penambahan data tempat wisata.');
         }
     }
 
@@ -125,16 +122,13 @@ class TouristAttractionController extends Controller
     public function show(string $id)
     {
         try {
-            $destination = $this->touristAttractionModel::with('images')->findOrFail($id);
-            return response()->json([
-                'status'    => 'success',
-                'data'      => $destination,
-            ]);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status'    => 'fail',
-                'message'   => 'Data tidak ditemukan.',
-            ], 404);
+            $destination = $this->touristAttractionModel::with('images')->find($id);
+            if (!$destination) {
+                throw new \Exception('Data tidak ditemukan', 404);
+            }
+            return $this->jsonResponse('success', 'Detail tempat wisata', $destination);
+        } catch (\Exception $e) {
+            return $this->handleException($e);
         }
     }
 
@@ -158,19 +152,13 @@ class TouristAttractionController extends Controller
             ]);
 
             if ($validate->fails()) {
-                return response()->json([
-                    'status'    => 'fail',
-                    'error'   => $validate->errors(),
-                ], 400);
+                return $this->jsonResponse('fail', $validate->errors(), null, 400);
             }
 
-            $destination = $this->touristAttractionModel::find($id);
+            $destination = $this->touristAttractionModel->find($id);
 
             if (!$destination) {
-                return response()->json([
-                    'status'    => 'fail',
-                    'message'   => 'Data tidak ditemukan.',
-                ], 404);
+                return $this->jsonResponse('fail', 'Data tidak ditemukan.', null, 404);
             }
 
             $destination->update([
@@ -186,20 +174,13 @@ class TouristAttractionController extends Controller
                 'village_id'    => $request->village_id,
             ]);
 
-            return response()->json([
-                'status'    => 'success',
-                'message'   => 'Data wisata berhasil diperbarui.',
-                'data'      => [
-                    'id'            => $destination->id,
-                    'name'          => $destination->name,
-                    'description'   => $destination->description,
-                ],
-            ], 201);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status'    => 'fail',
-                'message'   => 'Data wisata gagal diperbarui.',
-            ], 500);
+            return $this->jsonResponse('success', 'Data wisata berhasil diperbarui.', [
+                'id'            => $destination->id,
+                'name'          => $destination->name,
+                'description'   => $destination->description,
+            ], 200);
+        } catch (\Exception $e) {
+            return $this->handleException($e, 'Terjadi kesalahan dalam proses memperbarui data.');
         }
     }
 
@@ -211,22 +192,13 @@ class TouristAttractionController extends Controller
         try {
             $destination = $this->touristAttractionModel::find($id);
             if (!$destination) {
-                return response()->json([
-                    'status'    => 'fail',
-                    'message'   => 'Data tidak ditemukan.',
-                ], 404);
+                return $this->jsonResponse('fail', 'Data tidak ditemukan.', null, 404);
             }
 
             $destination->delete();
-            return response()->json([
-                'status'    => 'success',
-                'message'   => 'Data wisata berhasil dihapus.',
-            ], 200);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status'    => 'fail',
-                'message'   => 'Data wisata gagal dihapus.',
-            ], 500);
+            return $this->jsonResponse('success', 'Data wisata berhasil dihapus.');
+        } catch (\Exception $e) {
+            return $this->handleException($e, 'Terjadi kesalahan dalam proses penghapusan data.');
         }
     }
 }
