@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\RegencyController;
 use App\Http\Controllers\Api\VillageController;
 use App\Http\Controllers\Api\DistrictController;
@@ -43,4 +44,12 @@ Route::prefix('destinations/{destinationId}/images')->group(function() {
     Route::post('', [TouristAttractionImageController::class, 'store']);
     Route::put('', [TouristAttractionImageController::class, 'setProfile']);
     Route::delete('', [TouristAttractionImageController::class, 'delete']);
+});
+
+Route::prefix('reviews')->group(function () {
+    Route::get('/', [ReviewController::class, 'index']);
+    Route::post('/', [ReviewController::class, 'store']);
+    Route::get('/{id}', [ReviewController::class, 'show']);
+    Route::put('/{review}', [ReviewController::class, 'update']);
+    Route::delete('/{id}', [ReviewController::class, 'destroy']);
 });
