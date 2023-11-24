@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->boolean('profile')->default(false);
-            $table->foreignId('tourist_attraction_id')->constrained()->onUpdate('cascade');
+            $table->foreignId('tourist_attraction_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
