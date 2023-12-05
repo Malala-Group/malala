@@ -47,9 +47,8 @@ Route::prefix('destinations/{destinationId}/images')->group(function() {
 });
 
 Route::prefix('reviews')->group(function () {
-    Route::get('/', [ReviewController::class, 'index']);
+    Route::get('/{tourist_attraction_id}', [ReviewController::class, 'index']);
     Route::post('/', [ReviewController::class, 'store']);
-    Route::get('/{id}', [ReviewController::class, 'show']);
-    Route::put('/{review}', [ReviewController::class, 'update']);
+    Route::put('/{id}', [ReviewController::class, 'update']);
     Route::delete('/{id}', [ReviewController::class, 'destroy']);
 });

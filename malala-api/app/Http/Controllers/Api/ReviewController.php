@@ -21,10 +21,19 @@ class ReviewController extends Controller
     {
         $this->reviewModel = $reviewModel;
     }
-    public function index()
+    public function index($tourist_attraction_id)
     {
-        $reviews = Review::all();
-        return response()->json(['reviews' => $reviews], 200);
+        try {
+            $reviews = Review::where('tourist_attraction_id', $tourist_attraction_id)->get();
+            
+            return response()->json(['reviews' => $reviews], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Gagal mengambil data review.',
+                'error' => '' . $th,
+            ], 500);
+        }
     }
 
     /**
@@ -36,7 +45,7 @@ class ReviewController extends Controller
             $validate = Validator::make($request->all(), [
                 'rating' => 'required|integer|min:1|max:5',
                 'comment' => 'required|string',
-                'image_path' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
+                'tourist_attraction_id' => 'required|exists:tourist_attractions,id', // Menambahkan validasi untuk tourist_attraction_id
             ]);
 
             if ($validate->fails()) {
@@ -45,22 +54,38 @@ class ReviewController extends Controller
                     'error' => $validate->errors(),
                 ], 400);
             }
-
-            $review = null;
-
-            DB::transaction(function () use ($request, &$review) {
+            
+            $image_path= null;
+            if ($request->file('image_path')) {
+                $validate = Validator::make($request->all(), [
+                    
+                    'image_path' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
+                ]);
+                
+                if ($validate->fails()) {
+                    
+                    return response()->json([
+                        'status' => 'fail',
+                        'error' => $validate->errors(),
+                    ], 400);
+                }
                 $image_path = $request->file('image_path')->store('images', 'public');
+            }
+            
+            $review = null;
+            DB::transaction(function () use ($request, &$review, $image_path) {
 
                 $review = Review::create([
                     'rating' => $request->rating,
                     'comment' => $request->comment,
                     'image_path' => $image_path,
+                    'tourist_attraction_id' => $request->tourist_attraction_id,
                 ]);
             });
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Komentar berhasil ditambahkan.',
+                'message' => 'Komentar berhasil ditambahkan sesuai dengan tempat wisata.',
                 'data' => [
                     'review' => $review,
                 ],
@@ -141,7 +166,7 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
         try {
             $review = $this->reviewModel::find($id);

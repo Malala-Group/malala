@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('rating');
             $table->text('comment');
             $table->string('image_path')->nullable();
+            $table->foreignId('tourist_attraction_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,7 +25,7 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
+    {   
         Schema::dropIfExists('reviews');
     }
 };
