@@ -151,11 +151,11 @@ const DashboardMitra = {
           <div class="col-md-4">
             <div class="card text-white bg-danger" style="max-width: 15rem;">
               <div class="row">
-                <div class="col">
+                <div class="col ms-2">
                   <h3 class="card-title">44</h3>
                   <p class="card-text">data Wisata </p>
                 </div>
-                <div class="col text-end">
+                <div class="col text-end me-4">
                   <i class="bi bi-people-fill" style="font-size: 3rem;"></i>
                 </div>
               </div>

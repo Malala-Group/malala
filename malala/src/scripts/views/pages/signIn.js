@@ -65,6 +65,19 @@ const SignIn = {
             background-color: #8EACBB;
             color: #fff;
         }
+        .menu {
+        animation: fadeInUp 1s ease-in-out;
+        }
+        @keyframes fadeInUp {
+        from {
+        opacity: 0;
+        transform: translateY(20px);
+        }
+        to {
+        opacity: 1;
+        transform: translateY(0);
+        }
+        }
       </style>
 
       <div class="signup-container">
@@ -72,14 +85,14 @@ const SignIn = {
           <img src="/images/bg login.png" alt="Logo" style="max-width: 100%;">
         </div>
 
-        <div class="right-section">
+        <div class="right-section menu">
           <div class="col-md-7">
             <div class="text-center">
               <img src="/images/navbar.png" class="img-fluid mb-3" alt="Logo">
               <h3>Welcome to MALALA </h3>
               <h4>Your Journey, Our Expertise!</h4>
             </div>
-            <form id="formLogin">
+            <form id="formLogin" class="mt-4">
               <div class="mb-3">
                 <div class="input-group">
                   <span class="input-group-text">

@@ -38,11 +38,12 @@ const Serch = {
             <!-- Sidebar -->
             <div class="min-vh-100 bg-dark d-flex flex-column p-3" id="sidebar">
                 <div class="w-75 mx-auto mb-3">
-                    <img src="images/navbar.png" class="w-100">
+                    <img src="images/logo.png" class="w-100">
                     </div>
                     
-                <div class="d-flex py-2">
+                <div class="d-flex py-2 text-white">
                     <img src="images/profil.jpg" class="rounded-circle" style="width: 35px; height: 35px;">
+                    <p class="ms-2 mb-0" style="font-family: 'Poppins', sans-serif; font-weight: bold;">Hai, Martinus Juan</p>
                     <div class="d-flex align-items-center px-2">
                         <p class="user-login-name m-0 text-white"></p>
                     </div>
@@ -101,13 +102,14 @@ const Serch = {
             <!-- Page Content -->
             <div id="content" class="flex-grow-1">
                 <div class="welcome position-relative overflow-hidden d-flex flex-column justify-content-center" style="background-image: url('/images/beach.png'); background-size: cover; background-position: center; background-repeat: no-repeat; height: 50vh;">
-                    <div class="content row">
+                    
+                <div class="content row mt-5">
                         <div class="col-12 col-md-8 col-lg-6 mx-auto py-5">
                             <div class="mb-5">
                                 <h1 class="text-white text-center" style="font-size: 70px">Start Your Journey</h1>
                                 <p class="text-white text-center fs-4">Your Journey, Your Expertise</p>
                             </div>
-                            <form id="formSearchDestination" class="d-flex justify-content-center shadow px-3 py-2 bg-white mx-auto" style="border-radius: 500px; height: 44px;">
+                            <form id="formSearchDestination" class="d-flex justify-content-center shadow px-3 py-2 bg-white mx-auto mb-5" style="border-radius: 500px; height: 44px;">
                                 <input class="form-control border-0" type="search" id="inputKeywordDestination" placeholder="Find something....." aria-label="Search" style="border-radius: 500px">
                                 <button type="submit" class="btn d-flex justify-content-center align-items-center">
                                     <i class="bi bi-search text-secondary"></i>
