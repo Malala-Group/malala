@@ -1,0 +1,26 @@
+/* footer*/
+footer {
+  background-color: #476777;
+  padding: 20px 0;
+  color: #EAF2F6;
+}
+
+.footer-logo {
+  max-width: 100px; 
+}
+
+.social-icons img {
+  max-width: 30px; 
+  margin-right: 10px;
+}
+
+.contact-info {
+  margin-top: 10px;
+}
+
+.company-name {
+  text-align: center;
+  margin-top: 20px;
+}
+
+
