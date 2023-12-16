@@ -1,12 +1,36 @@
-name: Deploy Malala API
+name: Deploy Malala App
 
 on:
   push:
+    branches:
+      - main
     paths:
+      - 'malala/**'
       - 'malala-api/**'
 
 jobs:
-  deploy:
+  deploy-malala:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          cd malala
+          npm install
+
+      - name: Deploy Malala
+        run: |
+          npm run build
+
+  deploy-malala-api:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +47,4 @@ jobs:
 
       - name: Deploy Malala API
         run: |
-          # Tambahan perintah untuk deployment
-          php artisan migrate --force  
-          php artisan up
+          php artisan migrate --force && php artisan up
