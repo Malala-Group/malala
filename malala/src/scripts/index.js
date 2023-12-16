@@ -1,7 +1,5 @@
 import App from './views/app';
 
-require('dotenv').config();
-
 const app = new App({
   content: document.querySelector('#mainContent'),
 });
