@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\RegencyController;
@@ -21,8 +23,15 @@ use App\Http\Controllers\Api\TouristAttractionImageController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/isLogin', function() {
+    return response()->json(Auth::check());
+});
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function() {
+    Route::get('/user', function (Request $request) {
+        $userId = $request->user()->id;
+        return User::with('roles')->find($userId);
+    });
 });
 
 Route::get('/provinces', [ProvinceController::class, 'index']);
@@ -37,8 +46,18 @@ Route::get('/districts/{provinceId}/villages', [VillageController::class, 'index
 
 Route::get('/villages/{id}', [VillageController::class, 'show']);
 
-Route::apiResource('destinations', TouristAttractionController::class);
+// Route::apiResource('destinations', TouristAttractionController::class);
 
+Route::apiResource('destinations', TouristAttractionController::class)->only([
+    'index', 'show'
+]);
+
+Route::middleware(['auth:sanctum', 'verified', 'role:mitra'])->group(function() {
+    Route::apiResource('destinations', TouristAttractionController::class)->only([
+        'create', 'store', 'update', 'destroy'
+    ]);
+});
+    
 Route::prefix('destinations/{destinationId}/images')->group(function() {
     Route::get('', [TouristAttractionImageController::class, 'index']);
     Route::middleware('verified')->group(function() {
@@ -49,9 +68,11 @@ Route::prefix('destinations/{destinationId}/images')->group(function() {
 });
 
 Route::prefix('reviews')->group(function () {
-    Route::get('/', [ReviewController::class, 'index']);
-    Route::post('/', [ReviewController::class, 'store']);
-    Route::get('/{id}', [ReviewController::class, 'show']);
-    Route::put('/{review}', [ReviewController::class, 'update']);
-    Route::delete('/{id}', [ReviewController::class, 'destroy']);
+    Route::middleware(['verified', 'role:user'])->group(function() {
+        Route::get('/', [ReviewController::class, 'index']);
+        Route::post('/', [ReviewController::class, 'store']);
+        Route::get('/{id}', [ReviewController::class, 'show']);
+        Route::put('/{review}', [ReviewController::class, 'update']);
+        Route::delete('/{id}', [ReviewController::class, 'destroy']);
+    });
 });

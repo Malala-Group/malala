@@ -8,6 +8,7 @@ use Database\Seeders\RegencySeeder;
 use Database\Seeders\VillageSeeder;
 use Database\Seeders\DistrictSeeder;
 use Database\Seeders\ProvinceSeeder;
+use Database\Seeders\LaratrustSeeder;
 use Database\Seeders\RegionTypeSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +24,7 @@ class DatabaseSeeder extends Seeder
             RegencySeeder::class,
             DistrictSeeder::class,
             VillageSeeder::class,
+            LaratrustSeeder::class,
         ]);
     }
 }

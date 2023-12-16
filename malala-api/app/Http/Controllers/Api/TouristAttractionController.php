@@ -44,7 +44,7 @@ class TouristAttractionController extends BaseApiController
                 $query = $this->touristAttractionModel;
             }
 
-            $destinations = $query->with('images')->paginate(15);
+            $destinations = $query->with('images', 'province')->paginate(5);
 
             if ($destinations->count() < 1) {
                 throw new \Exception('Data tidak ditemukan', 404);
@@ -122,7 +122,7 @@ class TouristAttractionController extends BaseApiController
     public function show(string $id)
     {
         try {
-            $destination = $this->touristAttractionModel::with('images')->find($id);
+            $destination = $this->touristAttractionModel::with('images', 'province')->find($id);
             if (!$destination) {
                 throw new \Exception('Data tidak ditemukan', 404);
             }
