@@ -3,6 +3,7 @@ import '../../components/footer';
 import '../../components/destination-list';
 import AuthSource from '../../data/auth-source';
 import DestinationSource from '../../data/destination-source';
+import CONFIG from '../../globals/config';
 
 const Serch = {
   async render() {
@@ -49,8 +50,8 @@ const Serch = {
 
                 <div class="d-flex flex-column py-2">
                     <div class="sidebar-heading text-white mb-1">Dashboard and Profile</div>
-                    <a href="#/dashboard" class="text-decoration-none mb-1"><i class="bi bi-house-door-fill"></i> Dashboard</a>
-                    <a href="#/profile" class="text-decoration-none mb-1"><i class="bi bi-person"></i> Profile</a>
+                    <a href="${CONFIG.BASE_URL}#/dashboard" class="text-decoration-none mb-1"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+                    <a href="${CONFIG.BASE_URL}#/profile" class="text-decoration-none mb-1"><i class="bi bi-person"></i> Profile</a>
                 </div>
 
                 <div class="d-flex flex-column py-2">

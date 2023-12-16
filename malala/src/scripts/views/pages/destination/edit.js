@@ -4,6 +4,7 @@ import RegionSource from '../../../data/region-source';
 import createSideBar from '../../templates/TmSideBar';
 import UrlParser from '../../../routes/url-parser';
 import AuthSource from '../../../data/auth-source';
+import CONFIG from '../../../globals/config';
 
 require('select2');
 
@@ -115,7 +116,7 @@ const EditDestination = {
 
         <ul id="account-menu">
           <li><i class="bi bi-person-circle"></i></li>
-          <li id="account-menu-trigger"><a href="#/profile"></a></li>
+          <li id="account-menu-trigger"><a href="${CONFIG.BASE_URL}#/profile"></a></li>
         </ul>
       </div>
 

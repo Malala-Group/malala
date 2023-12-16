@@ -1,3 +1,5 @@
+import CONFIG from '../../globals/config';
+
 const Landing = {
   async render() {
     return /* html */`
@@ -28,7 +30,7 @@ const Landing = {
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav ms-auto">
-                <a class="nav-link active mx-2" href="#/about">About Us</a>
+                <a class="nav-link active mx-2" href="${CONFIG.BASE_URL}#/about">About Us</a>
                 <a class="nav-link active mx-2" href="#">Contact Us</a>
               </div>
             </div>
@@ -41,8 +43,8 @@ const Landing = {
               <p class="text-white text-center fs-4">Temukan rekomendasi tempat wisata yang kamu sukai di seluruh Indonesia</p>
             </div>
             <div class="d-flex justify-content-around">
-              <a href="#/sign-up" class="text-white text-decoration-none">Sign Up</a>
-              <a href="#/sign-in" class="text-white text-decoration-none">Sign In</a>
+              <a href="${CONFIG.BASE_URL}#/sign-up" class="text-white text-decoration-none">Sign Up</a>
+              <a href="${CONFIG.BASE_URL}#/sign-in" class="text-white text-decoration-none">Sign In</a>
             </div>
           </div>
         </div>

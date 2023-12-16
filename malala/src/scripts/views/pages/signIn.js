@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import AuthSource from '../../data/auth-source';
+import CONFIG from '../../globals/config';
 
 const SignIn = {
   async render() {
@@ -109,7 +110,7 @@ const SignIn = {
               </div>
             </form>
             <div class="d-flex justify-content-center">
-              <p>Don't have an account? <a href="#/sign-up">Sign Up</a></p>
+              <p>Don't have an account? <a href="${CONFIG.BASE_URL}#/sign-up">Sign Up</a></p>
             </div>
           </div>
         </div>

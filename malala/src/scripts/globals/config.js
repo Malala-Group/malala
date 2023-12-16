@@ -1,6 +1,6 @@
 const CONFIG = {
-  BASE_URL: 'http://localhost:9000/',
-  BASE_API_URL: 'http://localhost:8000/',
+  BASE_URL: process.env.BASE_URL,
+  BASE_API_URL: process.env.BASE_API_URL,
 };
 
 export default CONFIG;

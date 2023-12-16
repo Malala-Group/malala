@@ -1,3 +1,5 @@
+import CONFIG from '../../globals/config';
+
 const createSideBar = () => /* html */`
   <style>
     #sidebar {
@@ -27,15 +29,15 @@ const createSideBar = () => /* html */`
     <ul id="menu">
       <li>
         <i class="bi bi-house-door"></i>
-        <a href="#/dashboard-mitra">Dashboard</a>
+        <a href="${CONFIG.BASE_URL}#/dashboard-mitra">Dashboard</a>
       </li>
       <li>
         <i class="bi bi-bar-chart-fill"></i>
-        <a href="#/destination-list">List Data Wisata</a>
+        <a href="${CONFIG.BASE_URL}#/destination-list">List Data Wisata</a>
       </li>
       <li>
         <i class="bi bi-plus-square"></i>
-        <a href="#/destination-add">Tambah Data Wisata</a>
+        <a href="${CONFIG.BASE_URL}#/destination-add">Tambah Data Wisata</a>
       </li>
     </ul>
   </div>

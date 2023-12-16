@@ -1,3 +1,4 @@
+import CONFIG from '../globals/config';
 import AuthSource from '../data/auth-source';
 
 class Navbar extends HTMLElement {
@@ -32,7 +33,7 @@ class Navbar extends HTMLElement {
       <!-- Navbar -->
       <nav class="container-fluid">
         <!-- Logo -->
-        <a class="navbar-brand me-auto" href="#/dashboard">
+        <a class="navbar-brand me-auto" href="${CONFIG.BASE_URL}#/destination-list">
           <img src="/images/navbar.png" alt="Logo" height="40">
         </a>
 
@@ -45,13 +46,13 @@ class Navbar extends HTMLElement {
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link navbar-item" href="#/search">Explore</a>
+              <a class="nav-link navbar-item" href="${CONFIG.BASE_URL}#/search">Explore</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link navbar-item" href="#/whislist">Wishlist</a>
+              <a class="nav-link navbar-item" href="${CONFIG.BASE_URL}#/wishlist">Wishlist</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link navbar-item" href="#/about">About Us</a>
+              <a class="nav-link navbar-item" href="${CONFIG.BASE_URL}#/about">About Us</a>
             </li>
           </ul>
         </div>
@@ -75,10 +76,10 @@ class Navbar extends HTMLElement {
     } else {
       last = /* html */`
         <li class="nav-item">
-          <a class="navbar-item btn btn-primary" href="#/sign-in">Sign In</a>
+          <a class="navbar-item btn btn-primary" href="${CONFIG.BASE_URL}#/sign-in">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="navbar-item btn btn-primary" href="#/sign-up">Sign Up</a>
+          <a class="navbar-item btn btn-primary" href="${CONFIG.BASE_URL}#/sign-up">Sign Up</a>
         </li>
       `;
     }
@@ -89,7 +90,7 @@ class Navbar extends HTMLElement {
         const profileDropdownItem = document.querySelector('.dropdown-item[href="#/profile"]');
 
         const newElement = document.createElement('li');
-        newElement.innerHTML = '<a class="dropdown-item" href="#/dashboard-mitra">Dashboard Mitra</a>';
+        newElement.innerHTML = `<a class="dropdown-item" href="${CONFIG.BASE_URL}#/dashboard-mitra">Dashboard Mitra</a>`;
 
         profileDropdownItem.parentNode.insertBefore(newElement, profileDropdownItem.nextSibling);
       }

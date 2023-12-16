@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import AuthSource from '../../data/auth-source';
+import CONFIG from '../../globals/config';
 
 const SignUp = {
   async render() {
@@ -76,7 +77,7 @@ const SignUp = {
         <div class="signup-form">
             <img src="/images/navbar.png" class="mx-auto d-block" style="height: 70px;" alt="Navbar Image">
           <h2>Sign Up</h2>
-          <p>Already Sign Up? <a href="#/sign-in">Sign In</a></p>
+          <p>Already Sign Up? <a href="${CONFIG.BASE_URL}#/sign-in">Sign In</a></p>
           <!-- Your sign-up form content goes here -->
           <div class="line-container">
             <div class="line"></div>

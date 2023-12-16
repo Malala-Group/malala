@@ -1,3 +1,4 @@
+import CONFIG from '../globals/config';
 import './destination-card';
 import DestinationSource from '../data/destination-source';
 
@@ -61,10 +62,10 @@ class DestinationListTable extends HTMLElement {
         <td>08.00 - 16.00</td>
         <td>${destination.contact}</td>
         <td>
-          <a href="#/detail/${destination.id}" class="btn btn-info btn-sm mt-1 detail-btn">
+          <a href="${CONFIG.BASE_URL}#/detail/${destination.id}" class="btn btn-info btn-sm mt-1 detail-btn">
             <i class="bi bi-eye"></i>
           </a>
-          <a href="#/destination-edit/${destination.id}" class="btn btn-warning btn-sm mt-1 edit-btn">
+          <a href="${CONFIG.BASE_URL}#/destination-edit/${destination.id}" class="btn btn-warning btn-sm mt-1 edit-btn">
             <i class="bi bi-pencil"></i>
           </a>
           <button type="button" class="btn btn-danger btn-sm mt-1 delete-btn">

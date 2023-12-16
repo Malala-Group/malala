@@ -2,6 +2,7 @@ import createSideBar from '../../templates/TmSideBar';
 import AuthSource from '../../../data/auth-source';
 import DestinationSource from '../../../data/destination-source';
 import '../../../components/destination-list-table';
+import CONFIG from '../../../globals/config';
 
 const ListDestination = {
   async render() {
@@ -133,7 +134,7 @@ const ListDestination = {
             <i class="bi bi-person-circle"></i>
           </li>
           <li id="account-menu-trigger">
-            <a href="#/profile">Hi Martinus Juan</a>
+            <a href="${CONFIG.BASE_URL}#/profile">Hi Martinus Juan</a>
           </li>
         </ul>
       </div>
@@ -151,7 +152,7 @@ const ListDestination = {
         ${sidebar}
         <div id="content">
           <div class="text-end mt-3">
-            <a href="#/destination-add" class="btn btn-primary">Tambah Data Wisata</a>
+            <a href="${CONFIG.BASE_URL}#/destination-add" class="btn btn-primary">Tambah Data Wisata</a>
           </div>
           <div class="container list-destination"></div>
         </div>

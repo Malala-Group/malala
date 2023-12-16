@@ -1,3 +1,5 @@
+import CONFIG from '../globals/config';
+
 class DestinationCard extends HTMLElement {
   set destination(destination) {
     this._destination = destination;
@@ -49,7 +51,7 @@ class DestinationCard extends HTMLElement {
             <p class="ms-2 mb-0">Every Day</p>
           </div>
           <div class="mt-4 d-flex justify-content-end">
-            <a href="#/detail/${this._destination.id}" class="btn custom-btn">Detail</a>
+            <a href="${CONFIG.BASE_URL}#/detail/${this._destination.id}" class="btn custom-btn">Detail</a>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import CONFIG from '../globals/config';
 import API_ENPOINT from './api-endpoint';
 import Axios from '../../lib/axios';
 
@@ -54,7 +55,7 @@ class DestinationSource {
                 text: 'Data has been added.',
                 icon: 'success',
               }).then(() => {
-                window.location.href = '#/destination-list';
+                window.location.href = `${CONFIG.BASE_URL}#/destination-list`;
               });
             }
           });

@@ -3,6 +3,7 @@ import DestinationSource from '../../../data/destination-source';
 import RegionSource from '../../../data/region-source';
 import AuthSource from '../../../data/auth-source';
 import createSideBar from '../../templates/TmSideBar';
+import CONFIG from '../../../globals/config';
 
 require('select2');
 
@@ -114,7 +115,7 @@ const AddDestination = {
 
         <ul id="account-menu">
           <li><i class="bi bi-person-circle"></i></li>
-          <li id="account-menu-trigger"><a href="#/profile">Hi Martinus Juan</a></li>
+          <li id="account-menu-trigger"><a href="${CONFIG.BASE_URL}#/profile">Hi Martinus Juan</a></li>
         </ul>
       </div>
 
@@ -188,7 +189,7 @@ const AddDestination = {
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="#/destination-list" class="btn btn-danger">Cancel</a>
+            <a href="${CONFIG.BASE_URL}#/destination-list" class="btn btn-danger">Cancel</a>
           </form>
         </div>
       </div>
