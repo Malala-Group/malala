@@ -1,0 +1,28 @@
+name: Deploy Malala API
+
+on:
+  push:
+    paths:
+      - 'malala-api/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Dependencies
+        run: composer install --no-dev
+
+      - name: Deploy Malala API
+        run: |
+          # Tambahan perintah untuk deployment
+          php artisan migrate --force  
+          php artisan up
