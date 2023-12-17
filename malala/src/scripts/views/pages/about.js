@@ -10,13 +10,11 @@ const About = {
           transform: scale(0.5);
           transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
           animation: fadeInUp 0.5s ease-in-out forwards;
-}
+        }
         .card:hover {
           box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-          
           background-color: #8EACBB;
-  color: #ffffff;
-
+          color: #ffffff;
         }
 
         @keyframes fadeInUp {
@@ -28,10 +26,13 @@ const About = {
             opacity: 1;
             transform: translateY(0);
           }
-}
+        }
       </style>
       <nav-bar></nav-bar>
-      <div class="container mt-5">
+      <div class="container">
+        <div class="col-12 d-flex justify-content-center align-items-center min-vh-100">
+          <h1 class="text-center mt-5 mb-5">"Coming together is a beginning. Keeping together is progress. Working together is success." - Henry Ford</h1> 
+        </div>
         <h3 class="text-center mb-5 ">Meet Our Team</h3>
         <div class="row justify-content-center">
 
@@ -111,14 +112,11 @@ const About = {
             </div>
           </div>
         </div>
-        <div class="col-12 d-flex justify-content-center align-items-center">
-          <h1 class="text-center mt-5 mb-5">"Coming together is a beginning. Keeping together is progress. Working together is success." - Henry Ford</h1> 
-        </div>
       </div>
       <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  AOS.init();
-</script>
+      <script>
+        AOS.init();
+      </script>
       <foo-ter></foo-ter>
     `;
   },

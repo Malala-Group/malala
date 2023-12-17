@@ -42,8 +42,7 @@ const Serch = {
                     </div>
                     
                 <div class="d-flex py-2 text-white">
-                    <img src="images/profil.jpg" class="rounded-circle" style="width: 35px; height: 35px;">
-                    <p class="ms-2 mb-0" style="font-family: 'Poppins', sans-serif; font-weight: bold;">Hai, Martinus Juan</p>
+                    <i class="bi bi-person-circle fs-2"></i>
                     <div class="d-flex align-items-center px-2">
                         <p class="user-login-name m-0 text-white"></p>
                     </div>
@@ -158,9 +157,7 @@ const Serch = {
       if (name === '' && provinceId === null) {
         return;
       }
-      console.log(page);
       const data = await DestinationSource.list({ page, name, provinceId });
-      console.log(data);
       const containerElement = document.querySelector('.container-search-result');
 
       const destinationList = document.createElement('destination-list');
@@ -171,6 +168,7 @@ const Serch = {
       containerElement.innerHTML = '';
       containerElement.append(destinationList);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error after rendering:', error);
 
       if (error.response && error.response.status === 404) {

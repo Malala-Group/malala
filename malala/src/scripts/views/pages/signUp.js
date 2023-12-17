@@ -148,8 +148,8 @@ const SignUp = {
           ul.className = 'alert alert-danger';
           ul.setAttribute('role', 'alert');
 
+          // eslint-disable-next-line no-unused-vars
           Object.entries(data).forEach(([key, [value]]) => {
-            console.log(key);
             const li = document.createElement('li');
             li.textContent = value;
             ul.appendChild(li);

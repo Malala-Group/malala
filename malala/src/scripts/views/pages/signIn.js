@@ -98,14 +98,14 @@ const SignIn = {
                   <span class="input-group-text">
                     <i class="bi bi-person-fill"></i>
                   </span>
-                <input type="text" class="form-control" id="email" name="email" placeholder="Email" required value="juanprasetyo040502@gmail.com">
+                <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
               </div>
               <div class="mb-3 mt-3">
                 <div class="input-group">
                   <span class="input-group-text">
                     <i class="bi bi-lock"></i>
                   </span>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required value="secretpassword">
+                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                   <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="bi bi-eye"></i></button>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import AuthSource from '../../data/auth-source';
+import CONFIG from '../../globals/config';
 
 require('select2');
 
@@ -36,7 +37,7 @@ const Profile = {
                             <input type="text" class="form-control" id="inputContact">
                         </div>
                         <div class="mb-3 d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary mx-2">Kembali</button>
+                            <a href="${CONFIG.BASE_URL}#/dashboard" class="btn btn-primary mx-2">Kembali</a>
                             <button type="submit" class="btn btn-primary mx-2">Simpan</button>
                         </div>
                     </div>
@@ -54,7 +55,7 @@ const Profile = {
 
     $('#inputName').val(user.name);
     $('#inputEmail').val(user.email);
-    $('#inputContact').val(user.name);
+    // $('#inputContact').val(user.name);
   },
 };
 

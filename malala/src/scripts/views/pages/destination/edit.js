@@ -188,7 +188,7 @@ const EditDestination = {
           </form>
         </div>
       </div>
-  `;
+    `;
   },
 
   async afterRender() {
@@ -232,7 +232,6 @@ const EditDestination = {
         return;
       }
       $('#selectRegency').prop('disabled', false);
-      console.log(provinceId);
       let regencies = await RegionSource.regencies(provinceId);
       regencies = regencies.data;
       regencies = regencies.map(({ id, name }) => ({
@@ -251,7 +250,6 @@ const EditDestination = {
 
     $('#selectRegency').on('change', async () => {
       const regencyId = $('#selectRegency').val();
-      console.log(regencyId);
       if (!regencyId) {
         $('#selectDistrict').prop('disabled', true);
         $('#selectDistrict').empty();
@@ -270,7 +268,6 @@ const EditDestination = {
       $('#selectDistrict').empty();
       $('#selectDistrict').select2({
         theme: 'bootstrap-5',
-        minimumInputLength: 3,
         allowClear: true,
         placeholder: 'Pilih Kecamatan',
         data: districts,
@@ -279,7 +276,6 @@ const EditDestination = {
 
     $('#selectDistrict').on('change', async () => {
       const districtId = $('#selectDistrict').val();
-      console.log(districtId);
       if (!districtId) {
         $('#selectVillage').prop('disabled', true);
         $('#selectVillage').empty();
@@ -295,7 +291,6 @@ const EditDestination = {
       $('#selectVillage').empty();
       $('#selectVillage').select2({
         theme: 'bootstrap-5',
-        minimumInputLength: 3,
         allowClear: true,
         placeholder: 'Pilih Desa/Kelurahan',
         data: villages,
@@ -319,15 +314,13 @@ const EditDestination = {
         link_map: $('#inputLinkGMap').val(),
       };
 
-      const response = await DestinationSource.update(url.id, destination);
-      console.log(response);
+      await DestinationSource.update(url.id, destination);
     });
   },
 
   async setInputWithData(destinationId) {
     const response = await DestinationSource.get(destinationId);
     const destination = response.data;
-    console.log(destination);
 
     $('#inputName').val(destination.name);
     $('#inputDescription').val(destination.description);

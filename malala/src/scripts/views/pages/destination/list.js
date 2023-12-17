@@ -45,13 +45,11 @@ const ListDestination = {
         .drawer {
           position: fixed;
           top: 60px;
-          /* Sesuaikan dengan tinggi navbar */
           right: 0;
           width: 200px;
           background-color: #fff;
           box-shadow: -5px 0 5px rgba(0, 0, 0, 0.1);
           display: none;
-          /* Awalnya sembunyi */
         }
 
         .drawer.show {
@@ -130,12 +128,8 @@ const ListDestination = {
           <img src="/images/logo.png" alt="Logo" />
         </div>
         <ul id="account-menu">
-          <li>
-            <i class="bi bi-person-circle"></i>
-          </li>
-          <li id="account-menu-trigger">
-            <a href="${CONFIG.BASE_URL}#/profile">Hi Martinus Juan</a>
-          </li>
+          <li><i class="bi bi-person-circle"></i></li>
+          <li id="account-menu-trigger"><a href="${CONFIG.BASE_URL}#/profile"></a></li>
         </ul>
       </div>
       <div id="drawer" class="drawer">
@@ -172,9 +166,11 @@ const ListDestination = {
 
   async getDataAndRender(page = 1) {
     try {
-      console.log(page);
+      const user = await AuthSource.checkAccessPage(['mitra']);
+      const userNavElement = document.querySelector('#account-menu-trigger a');
+      userNavElement.textContent = user.name;
+
       const data = await DestinationSource.list({ page });
-      console.log(data.data);
       const containerElement = document.querySelector('.list-destination');
       const destinationList = document.createElement('destination-list-table');
       // eslint-disable-next-line max-len
@@ -183,6 +179,7 @@ const ListDestination = {
       containerElement.innerHTML = '';
       containerElement.append(destinationList);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error after rendering:', error);
     }
   },
