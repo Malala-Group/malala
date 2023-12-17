@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('rating');
-            $table->text('comment');
-            $table->string('image_path')->nullable();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('tourist_attraction_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
@@ -26,7 +23,7 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {   
-        Schema::dropIfExists('reviews');
+    {
+        Schema::dropIfExists('wishlists');
     }
 };

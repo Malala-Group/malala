@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Review;
+use App\Models\Wishlist;
+use App\Models\TouristAttraction;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\HasRolesAndPermissions;
@@ -43,4 +46,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function touristAttractions(): HasMany
+    {
+        return $this->hasMany(TouristAttraction::class);
+    }
+
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 }

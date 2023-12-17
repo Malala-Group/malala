@@ -23,6 +23,7 @@ return new class extends Migration
             $table->char('regency_id', 4);
             $table->char('district_id', 6);
             $table->char('village_id', 10);
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
 
             $table->foreign('province_id')->references('id')->on('provinces')->onUpdate('cascade');

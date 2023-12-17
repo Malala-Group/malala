@@ -17,6 +17,7 @@ import ResendEmailVerification from '../views/auth/resend-email-verification';
 
 // User
 import Profile from '../views/pages/profile';
+import Wishlist from '../views/pages/user/wishlist';
 
 // Mitra
 import DashboardMitra from '../views/pages/mitra/dashboard';
@@ -39,6 +40,7 @@ const routes = {
   '/resend-email': ResendEmailVerification,
 
   '/profile': Profile,
+  '/wishlist': Wishlist,
 
   '/dashboard-mitra': DashboardMitra,
 };

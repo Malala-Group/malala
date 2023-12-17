@@ -15,9 +15,8 @@ class DestinationCard extends HTMLElement {
 
     this._images = this._destination.images;
     this._profilePicture = this._images.filter((image) => image.profile === 1);
-    console.log(this._profilePicture);
 
-    this.classList.add('col-12', 'col-md-4', 'col-lg-3', 'mb-4', 'px-2');
+    this.classList.add('col-12', 'col-md-4', 'col-lg-3', 'mb-4', 'px-2', 'd-flex');
     this.innerHTML = /* html */ `
       <style>
         .custom-btn {
