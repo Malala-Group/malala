@@ -22,6 +22,12 @@ const API_ENPOINT = {
 
   // User
   USER: `${CONFIG.BASE_API_URL}api/user`,
+
+  // Review
+  REVIEW: `${CONFIG.BASE_API_URL}api/reviews`,
+
+  // Wishlist
+  WISHLIST: `${CONFIG.BASE_API_URL}api/wishlists`,
 };
 
 export default API_ENPOINT;

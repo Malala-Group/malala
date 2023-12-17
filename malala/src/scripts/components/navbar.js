@@ -67,7 +67,7 @@ class Navbar extends HTMLElement {
             ${this._user.name}
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="${CONFIG.BASE_URL}#/profile">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><button type="button" class="dropdown-item btn-logout">Logout</button></li>
           </ul>
@@ -87,7 +87,7 @@ class Navbar extends HTMLElement {
     document.querySelector('.navbar-nav').innerHTML += last;
     if (this._user) {
       if (this._user.roles.map((role) => role.name).includes('mitra')) {
-        const profileDropdownItem = document.querySelector('.dropdown-item[href="#/profile"]');
+        const profileDropdownItem = document.querySelector(`.dropdown-item[href="${CONFIG.BASE_URL}#/profile"]`);
 
         const newElement = document.createElement('li');
         newElement.innerHTML = `<a class="dropdown-item" href="${CONFIG.BASE_URL}#/dashboard-mitra">Dashboard Mitra</a>`;

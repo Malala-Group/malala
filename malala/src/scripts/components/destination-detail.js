@@ -13,19 +13,13 @@ class DestinationDetail extends HTMLElement {
 
     this._images = this._destination.images;
     this._profilePicture = this._images.filter((image) => image.profile === 1);
-    console.log(this._profilePicture);
 
     this.innerHTML = /* html */ `
       <div class="col-12 overflow-hidden" style="height: 300px;">
         <img src="${this._profilePicture[0].name}" class="w-100" alt="Deskripsi Gambar">
       </div>
       <div class="container mt-5">
-        <div class="text-end my-3">
-          <button type="button" class="btn btn-light">
-            <i class="bi bi-bookmark"></i>
-            Simpan
-          </button>
-        </div>
+        <div class="text-end my-3 button-container"></div>
         <div class="row">
           <div class="col-md-8">
             <div class="card">
@@ -70,13 +64,7 @@ class DestinationDetail extends HTMLElement {
               <p class="fs-6 fw-bold m-0"><i class="bi bi-alarm"></i> Jam Operasional </p>
               <div class="card mb-4">
                 <div class="card-body jam">
-                  <p class="card-text">Senin : 08.00–18.00</p>
-                  <p class="card-text">Senin : 08.00–18.00</p>
-                  <p class="card-text">Senin : 08.00–18.00</p>
-                  <p class="card-text">Senin : 08.00–18.00</p>
-                  <p class="card-text">Senin : 08.00–18.00</p>
-                  <p class="card-text">Senin : 08.00–18.00</p>
-                  <p class="card-text">Senin : 08.00–18.00</p>
+                  <p class="card-text">08.00–18.00</p>
                 </div>
               </div>
 

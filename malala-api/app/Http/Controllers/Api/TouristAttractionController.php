@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\TouristAttraction;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\TouristAttractionImage;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Api\BaseApiController;
@@ -81,8 +82,9 @@ class TouristAttractionController extends BaseApiController
             }
 
             $destination = null;
+            $user_id = Auth::id();
 
-            DB::transaction(function () use ($request, &$destination) {
+            DB::transaction(function () use ($request, &$destination, $user_id) {
                 $destination = $this->touristAttractionModel::create([
                     'name'          => $request->name,
                     'description'   => $request->description,
@@ -94,6 +96,7 @@ class TouristAttractionController extends BaseApiController
                     'regency_id'    => $request->regency_id,
                     'district_id'   => $request->district_id,
                     'village_id'    => $request->village_id,
+                    'user_id'       => $user_id,
                 ]);
 
                 $image = $request->file('image');
@@ -122,7 +125,7 @@ class TouristAttractionController extends BaseApiController
     public function show(string $id)
     {
         try {
-            $destination = $this->touristAttractionModel::with('images', 'province')->find($id);
+            $destination = $this->touristAttractionModel::with('images', 'province', 'reviews', 'reviews.user')->find($id);
             if (!$destination) {
                 throw new \Exception('Data tidak ditemukan', 404);
             }
@@ -160,6 +163,9 @@ class TouristAttractionController extends BaseApiController
             if (!$destination) {
                 return $this->jsonResponse('fail', 'Data tidak ditemukan.', null, 404);
             }
+            if ($destination->user_id !== Auth::id) {
+                return $this->jsonResponse('fail', "You don't have access.", null, 403);
+            }
 
             $destination->update([
                 'name'          => $request->name,
@@ -193,6 +199,9 @@ class TouristAttractionController extends BaseApiController
             $destination = $this->touristAttractionModel::find($id);
             if (!$destination) {
                 return $this->jsonResponse('fail', 'Data tidak ditemukan.', null, 404);
+            }
+            if ($destination->user_id !== Auth::id) {
+                return $this->jsonResponse('fail', "You don't have access.", null, 403);
             }
 
             $destination->delete();

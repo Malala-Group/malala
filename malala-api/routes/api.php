@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\RegencyController;
 use App\Http\Controllers\Api\VillageController;
 use App\Http\Controllers\Api\DistrictController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\TouristAttractionController;
 use App\Http\Controllers\Api\TouristAttractionImageController;
 
@@ -54,7 +55,7 @@ Route::apiResource('destinations', TouristAttractionController::class)->only([
 
 Route::middleware(['auth:sanctum', 'verified', 'role:mitra'])->group(function() {
     Route::apiResource('destinations', TouristAttractionController::class)->only([
-        'create', 'store', 'update', 'destroy'
+        'store', 'update', 'destroy'
     ]);
 });
     
@@ -68,11 +69,17 @@ Route::prefix('destinations/{destinationId}/images')->group(function() {
 });
 
 Route::prefix('reviews')->group(function () {
-    Route::middleware(['verified', 'role:user'])->group(function() {
-        Route::get('/', [ReviewController::class, 'index']);
-        Route::post('/', [ReviewController::class, 'store']);
+    Route::get('', [ReviewController::class, 'index']);
+    Route::middleware(['auth:sanctum', 'verified', 'role:user|mitra'])->group(function() {
+        Route::post('', [ReviewController::class, 'store']);
         Route::get('/{id}', [ReviewController::class, 'show']);
-        Route::put('/{review}', [ReviewController::class, 'update']);
+        Route::put('/{id}', [ReviewController::class, 'update']);
         Route::delete('/{id}', [ReviewController::class, 'destroy']);
     });
+});
+
+Route::middleware(['auth:sanctum', 'verified', 'role:user|mitra'])->group(function() {
+    Route::apiResource('wishlists', WishlistController::class)->only([
+        'index', 'store', 'show', 'destroy'
+    ]);
 });

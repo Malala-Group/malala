@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Review;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Api\BaseApiController;
 
 
-class ReviewController extends Controller
+class ReviewController extends BaseApiController
 {
     /**
      * Display a listing of the resource.
@@ -43,59 +45,43 @@ class ReviewController extends Controller
     {
         try {
             $validate = Validator::make($request->all(), [
-                'rating' => 'required|integer|min:1|max:5',
-                'comment' => 'required|string',
-                'tourist_attraction_id' => 'required|exists:tourist_attractions,id', // Menambahkan validasi untuk tourist_attraction_id
+                'rating'                => 'required|integer|min:1|max:5',
+                'comment'               => 'required|string',
+                'tourist_attraction_id' => 'required|exists:tourist_attractions,id',
             ]);
 
             if ($validate->fails()) {
-                return response()->json([
-                    'status' => 'fail',
-                    'error' => $validate->errors(),
-                ], 400);
+                return $this->jsonResponse('fail', $validate->errors(), null, 400);
             }
             
-            $image_path= null;
+            $image_path = null;
             if ($request->file('image_path')) {
                 $validate = Validator::make($request->all(), [
-                    
                     'image_path' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
                 ]);
                 
                 if ($validate->fails()) {
-                    
-                    return response()->json([
-                        'status' => 'fail',
-                        'error' => $validate->errors(),
-                    ], 400);
+                    return $this->jsonResponse('fail', $validate->errors(), null, 400);
                 }
+
                 $image_path = $request->file('image_path')->store('images', 'public');
             }
-            
-            $review = null;
-            DB::transaction(function () use ($request, &$review, $image_path) {
 
+            $review = null;
+            $user_id = Auth::id();
+            DB::transaction(function () use ($request, &$review, $image_path, $user_id) {
                 $review = Review::create([
                     'rating' => $request->rating,
                     'comment' => $request->comment,
                     'image_path' => $image_path,
                     'tourist_attraction_id' => $request->tourist_attraction_id,
+                    'user_id' => $user_id,
                 ]);
             });
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Komentar berhasil ditambahkan sesuai dengan tempat wisata.',
-                'data' => [
-                    'review' => $review,
-                ],
-            ], 201);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'fail',
-                'message' => 'Komentar gagal ditambahkan.',
-                'error' => '' . $th,
-            ], 500);
+            return $this->jsonResponse('success', 'Komentar berhasil ditambahkan.', $review, 201);
+        } catch (\Exception $e) {
+            return $this->handleException($e, 'Terjadi kesalahan dalam proses penambahan komentar.');
         }
     }
 
@@ -169,7 +155,7 @@ class ReviewController extends Controller
     public function destroy($id)
     {
         try {
-            $review = $this->reviewModel::find($id);
+            $review = Review::find($id);
             if (!$review) {
                 return response()->json([
                     'status'  => 'fail',

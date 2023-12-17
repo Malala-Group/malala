@@ -70,7 +70,6 @@ const SignUp = {
 
     <div class="signup-container">
       <div class="left-section">
-        <!-- Logo or any content for the left section -->
         <img src="/images/bg login.png" alt="Logo" style="max-width: 100%;">
       </div>
       <div class="right-section">
@@ -78,7 +77,7 @@ const SignUp = {
             <img src="/images/navbar.png" class="mx-auto d-block" style="height: 70px;" alt="Navbar Image">
           <h2>Sign Up</h2>
           <p>Already Sign Up? <a href="${CONFIG.BASE_URL}#/sign-in">Sign In</a></p>
-          <!-- Your sign-up form content goes here -->
+
           <div class="line-container">
             <div class="line"></div>
             <div class="text-container">
@@ -86,27 +85,31 @@ const SignUp = {
             </div>
           </div>
 
+          <div id="alert-container">
+
+          </div>
+
           <form id="formRegister">
             <div class="mb-3">
-              <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Fullname">
+              <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Fullname" required>
             </div>
             <div class="mb-3">
-              <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="Email">
+              <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="Email" required>
             </div>
             <div class="mb-3">
               <div class="input-group">
-                <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
+                <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" required>
                 <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
               </div>
             </div>
             <div class="mb-3">
               <div class="input-group">
-                <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" placeholder="Re Type Password">
+                <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" placeholder="Re Type Password" required>
                 <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
               </div>
             </div>
             <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="agreeCheck">
+              <input type="checkbox" class="form-check-input" id="agreeCheck" required>
               <label class="form-check-label" for="agreeCheck">I agree to the terms and conditions</label>
             </div>
             <button type="submit" class="btn custom-btn">Sign Up</button>
@@ -128,7 +131,54 @@ const SignUp = {
         password_confirmation: $('#passwordConfirmation').val(),
       };
 
-      await AuthSource.register(user);
+      const alertContainer = $('#alert-container');
+      alertContainer.empty();
+
+      try {
+        await AuthSource.register(user);
+      } catch (error) {
+        if (error.response.status === 422) {
+          const data = error.response.data.errors;
+          const ul = document.createElement('ul');
+          ul.className = 'alert alert-danger';
+          ul.setAttribute('role', 'alert');
+
+          Object.entries(data).forEach(([key, [value]]) => {
+            console.log(key);
+            const li = document.createElement('li');
+            li.textContent = value;
+            ul.appendChild(li);
+          });
+          alertContainer.append(ul);
+
+          if (data.name) {
+            $('#inputName').addClass('is-invalid');
+            $('#inputName').removeClass('is-valid');
+          } else {
+            $('#inputName').addClass('is-valid');
+            $('#inputName').removeClass('is-invalid');
+          }
+          if (data.email) {
+            $('#inputEmail').addClass('is-invalid');
+            $('#inputEmail').removeClass('is-valid');
+          } else {
+            $('#inputEmail').addClass('is-valid');
+            $('#inputEmail').removeClass('is-invalid');
+          }
+          if (data.password) {
+            $('#inputPassword').addClass('is-invalid');
+            $('#inputPassword').removeClass('is-valid');
+            $('#passwordConfirmation').addClass('is-invalid');
+            $('#passwordConfirmation').removeClass('is-valid');
+          } else {
+            $('#inputPassword').addClass('is-valid');
+            $('#inputPassword').removeClass('is-invalid');
+            $('#passwordConfirmation').addClass('is-valid');
+            $('#passwordConfirmation').removeClass('is-invalid');
+          }
+        }
+        throw error;
+      }
     });
   },
 };

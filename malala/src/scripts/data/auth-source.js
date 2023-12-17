@@ -120,6 +120,11 @@ class AuthSource {
       }
       return undefined;
     } catch (error) {
+      if (error.response.data.message) {
+        if (error.response.data.message === 'Your email address is not verified.') {
+          window.location.href = `${CONFIG.BASE_URL}#/resend-email`;
+        }
+      }
       console.error(error);
       throw error;
     }
@@ -144,11 +149,6 @@ class AuthSource {
         return response.data;
       });
     } catch (error) {
-      if (error.response.data.message) {
-        if (error.response.data.message === 'Your email address is not verified.') {
-          window.location.href = `${CONFIG.BASE_URL}#/resend-email`;
-        }
-      }
       console.error(error);
       throw error;
     }
