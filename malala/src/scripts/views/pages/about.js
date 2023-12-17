@@ -3,29 +3,40 @@ import '../../components/navbar';
 
 const About = {
   async render() {
-    return /* html */`
+    return /* html */ `
       <style>
         .card {
           background-color: #EAF2F6;
-          transition: box-shadow 0.3s ease;
-        }
+          transform: scale(0.5);
+          transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+          animation: fadeInUp 0.5s ease-in-out forwards;
+}
         .card:hover {
           box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+          
+          background-color: #8EACBB;
+  color: #ffffff;
+
         }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+}
       </style>
       <nav-bar></nav-bar>
-      <div class="container">
-        <div class="row min-vh-100">
-          <div class="col-12 d-flex justify-content-center align-items-center">
-            <h1 class="text-center mt-5 mb-5">"Coming together is a beginning. Keeping together is progress. Working together is success." - Henry Ford</h1> 
-          </div>
-        </div>
-
-        <h3 class="text-center mb-5">Meet Our Team</h3>
+      <div class="container mt-5">
+        <h3 class="text-center mb-5 ">Meet Our Team</h3>
         <div class="row justify-content-center">
 
           <!-- Card Anggota 1 -->
-          <div class="col-6 col-md-4 mb-4 d-flex">
+          <div data-aos="fade-up" class="col-6 col-md-4 mb-4 d-flex">
             <div class="card w-100 p-3 text-center">
               <img src="/images/about-us/rakan.png" class="card-img-top w-50 mx-auto mt-3" alt="Rakannanda Erdy Suprapto">
               <div class="card-body">
@@ -39,7 +50,7 @@ const About = {
           </div>
 
           <!-- Card Anggota 2 -->
-          <div class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
+          <div data-aos="fade-up" class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
             <div class="card w-100 p-3 text-center">
               <img src="/images/about-us/panji.png" class="card-img-top w-50 mx-auto mt-3" alt="Panji Revolusioner Saputro">
               <div class="card-body">
@@ -53,7 +64,7 @@ const About = {
           </div>
 
           <!-- Card Anggota 3 -->
-          <div class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
+          <div data-aos="fade-up" class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
             <div class="card w-100 p-3 text-center">
               <img src="/images/about-us/fatma.png" class="card-img-top w-50 mx-auto mt-3" alt="Fatma Hidayah">
               <div class="card-body">
@@ -67,7 +78,7 @@ const About = {
           </div>
 
           <!-- Card Anggota 4 -->
-          <div class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
+          <div data-aos="fade-up" class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
             <div class="card w-100 p-3 text-center">
               <img src="/images/about-us/juan.png" class="card-img-top w-50 mx-auto mt-3" alt="Martinus Juan Prasetyo">
               <div class="card-body">
@@ -87,7 +98,7 @@ const About = {
           </div>
 
           <!-- Card Anggota 5 -->
-          <div class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
+          <div data-aos="fade-up" class="col-6 col-md-4 mb-4 d-flex align-items-stretch">
             <div class="card w-100 p-3 text-center">
               <img src="/images/about-us/chris.png" class="card-img-top w-50 mx-auto mt-3" alt="Chrisnata Manihuruk">
               <div class="card-body">
@@ -100,8 +111,14 @@ const About = {
             </div>
           </div>
         </div>
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <h1 class="text-center mt-5 mb-5">"Coming together is a beginning. Keeping together is progress. Working together is success." - Henry Ford</h1> 
+        </div>
       </div>
-
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
       <foo-ter></foo-ter>
     `;
   },

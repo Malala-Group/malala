@@ -66,6 +66,11 @@ const SignUp = {
           background-color: #8EACBB;
           color: #fff;
       }
+      .judul{
+      font-family: 'Poppins';
+      color: #476777 ;
+      }
+      
     </style>
 
     <div class="signup-container">
@@ -75,7 +80,7 @@ const SignUp = {
       <div class="right-section">
         <div class="signup-form">
             <img src="/images/navbar.png" class="mx-auto d-block" style="height: 70px;" alt="Navbar Image">
-          <h2>Sign Up</h2>
+          <h2 class="judul">Sign Up</h2>
           <p>Already Sign Up? <a href="${CONFIG.BASE_URL}#/sign-in">Sign In</a></p>
 
           <div class="line-container">
