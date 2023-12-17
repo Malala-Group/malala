@@ -115,7 +115,7 @@ const AddDestination = {
 
         <ul id="account-menu">
           <li><i class="bi bi-person-circle"></i></li>
-          <li id="account-menu-trigger"><a href="${CONFIG.BASE_URL}#/profile">Hi Martinus Juan</a></li>
+          <li id="account-menu-trigger"><a href="${CONFIG.BASE_URL}#/profile"></a></li>
         </ul>
       </div>
 
@@ -132,15 +132,15 @@ const AddDestination = {
           <form id="formAddDestination" enctype="multipart/form-data">
             <div class="mb-3">
               <label for="inputName" class="form-label">Nama Tempat Wisata</label>
-              <input type="text" class="form-control" id="inputName" aria-describedby="inputName"  value="coba nama">
+              <input type="text" class="form-control" id="inputName" aria-describedby="inputName">
             </div>
             <div class="mb-3">
               <label for="inputDescription" class="form-label">Deskripsi</label>
-              <textarea class="form-control" id="inputDescription" aria-describedby="inputDescription" >coba deskription</textarea>
+              <textarea class="form-control" id="inputDescription" aria-describedby="inputDescription"></textarea>
             </div>
             <div class="mb-3">
               <label for="inputPrice" class="form-label">Harga tiket</label>
-              <input type="number" min="0" class="form-control" id="inputPrice" aria-describedby="inputPrice"  value="20000">
+              <input type="number" min="0" class="form-control" id="inputPrice" aria-describedby="inputPrice">
             </div>
             <div class="row">
               <div class="col">
@@ -172,15 +172,15 @@ const AddDestination = {
             </div>
             <div class="mb-3">
               <label for="inputAddress" class="form-label">Alamat</label>
-              <input type="text" class="form-control" id="inputAddress" aria-describedby="inputAddress"  value="alamatku">
+              <input type="text" class="form-control" id="inputAddress" aria-describedby="inputAddress">
             </div>
             <div class="mb-3">
               <label for="inputLinkGMap" class="form-label">Link Google Map</label>
-              <input type="text" class="form-control" id="inputLinkGMap" aria-describedby="inputLinkGMap" placeholder="https://maps.app.goo.gl/"  value="https://maps.app.goo.gl/5gR7AXpM1Gvu2x2H8">
+              <input type="text" class="form-control" id="inputLinkGMap" aria-describedby="inputLinkGMap" placeholder="https://maps.app.goo.gl/">
             </div>
             <div class="mb-3">
               <label for="inputContact" class="form-label">Contact</label>
-              <input type="text" class="form-control" id="inputContact" aria-describedby="inputContact" placeholder="+62"  value="+623231313">
+              <input type="text" class="form-control" id="inputContact" aria-describedby="inputContact" placeholder="+62">
             </div>
             <div class="mb-3">
               <label for="inputImage" class="form-label">Foto</label>
@@ -204,7 +204,6 @@ const AddDestination = {
     const selectProvinceElement = document.querySelector('#selectProvince');
     const data = await RegionSource.provinces();
     const provinces = data.data;
-    console.log(provinces);
     provinces.forEach((province) => {
       const optionElement = document.createElement('option');
       optionElement.setAttribute('value', province.id);
@@ -235,7 +234,6 @@ const AddDestination = {
         return;
       }
       $('#selectRegency').prop('disabled', false);
-      console.log(provinceId);
       let regencies = await RegionSource.regencies(provinceId);
       regencies = regencies.data;
       regencies = regencies.map(({ id, name }) => ({
@@ -245,7 +243,6 @@ const AddDestination = {
       $('#selectRegency').empty();
       $('#selectRegency').select2({
         theme: 'bootstrap-5',
-        minimumInputLength: 3,
         allowClear: true,
         placeholder: 'Pilih Kabupaten/Kota',
         data: regencies,
@@ -254,7 +251,6 @@ const AddDestination = {
 
     $('#selectRegency').on('change', async () => {
       const regencyId = $('#selectRegency').val();
-      console.log(regencyId);
       if (!regencyId) {
         $('#selectDistrict').prop('disabled', true);
         $('#selectDistrict').empty();
@@ -273,7 +269,6 @@ const AddDestination = {
       $('#selectDistrict').empty();
       $('#selectDistrict').select2({
         theme: 'bootstrap-5',
-        minimumInputLength: 3,
         allowClear: true,
         placeholder: 'Pilih Kecamatan',
         data: districts,
@@ -282,7 +277,6 @@ const AddDestination = {
 
     $('#selectDistrict').on('change', async () => {
       const districtId = $('#selectDistrict').val();
-      console.log(districtId);
       if (!districtId) {
         $('#selectVillage').prop('disabled', true);
         $('#selectVillage').empty();
@@ -298,7 +292,6 @@ const AddDestination = {
       $('#selectVillage').empty();
       $('#selectVillage').select2({
         theme: 'bootstrap-5',
-        minimumInputLength: 3,
         allowClear: true,
         placeholder: 'Pilih Desa/Kelurahan',
         data: villages,
@@ -328,8 +321,7 @@ const AddDestination = {
       Object.keys(destination).forEach((key) => {
         formData.append(key, destination[key]);
       });
-      const response = await DestinationSource.add(formData);
-      console.log(response);
+      await DestinationSource.add(formData);
     });
   },
 

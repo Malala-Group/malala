@@ -1,5 +1,6 @@
 import createSideBar from '../../templates/TmSideBar';
 import AuthSource from '../../../data/auth-source';
+import CONFIG from '../../../globals/config';
 
 const DashboardMitra = {
   async render() {
@@ -127,12 +128,8 @@ const DashboardMitra = {
           <img src="/images/logo.png" alt="Logo" />
         </div>
         <ul id="account-menu">
-          <li>
-            <i class="bi bi-person-circle"></i>
-          </li>
-          <li id="account-menu-trigger">
-            <a href="#">Hi Martinus Juan</a>
-          </li>
+          <li><i class="bi bi-person-circle"></i></li>
+          <li id="account-menu-trigger"><a href="${CONFIG.BASE_URL}#/profile"></a></li>
         </ul>
       </div>
       <div id="drawer" class="drawer">
@@ -169,7 +166,9 @@ const DashboardMitra = {
   },
 
   async afterRender() {
-    await AuthSource.checkAccessPage(['mitra']);
+    const user = await AuthSource.checkAccessPage(['mitra']);
+    const userNavElement = document.querySelector('#account-menu-trigger a');
+    userNavElement.textContent = user.name;
   },
 };
 

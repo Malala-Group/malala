@@ -9,27 +9,27 @@ const Dashboard = {
   async render() {
     return /* html */ `
         <style>
-            .card-icon {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                z-index: 1;
-            }
-            
-            .rating {
-                font-size: 24px;
-                color: #000;
-                cursor: pointer;
-            }
-        
-            .rating .star {
-                transition: color 0.5s;
-            }
-        
-            .rating .star:hover,
-            .rating .star.active {
-                color: #ffc107; 
-            }
+          .card-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+          }
+          
+          .rating {
+            font-size: 24px;
+            color: #000;
+            cursor: pointer;
+          }
+      
+          .rating .star {
+            transition: color 0.5s;
+          }
+      
+          .rating .star:hover,
+          .rating .star.active {
+            color: #ffc107; 
+          }
         </style>
         <nav-bar></nav-bar>
         <div class="container">
@@ -41,11 +41,7 @@ const Dashboard = {
                     </div>
                 </div>
             </div>
-                
-
-
             <div class="list-destination"></div>
-
         </div>
         <foo-ter></foo-ter>
 
@@ -85,9 +81,7 @@ const Dashboard = {
 
   async getDataAndRender(page = 1) {
     try {
-      console.log(page);
       const data = await DestinationSource.list({ page });
-      console.log(data.data);
       const containerElement = document.querySelector('.list-destination');
       const destinationList = document.createElement('destination-list');
       // eslint-disable-next-line max-len
@@ -96,6 +90,7 @@ const Dashboard = {
       containerElement.innerHTML = '';
       containerElement.append(destinationList);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error after rendering:', error);
     }
   },

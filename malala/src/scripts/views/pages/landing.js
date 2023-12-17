@@ -25,23 +25,22 @@ const Landing = {
           z-index: 1;
         }
         .nav-link:hover,.menu:hover  {
-         font-weight: bold;
-         text-decoration: underline;
+          font-weight: bold;
+          text-decoration: underline;
         }
         .content, .footer , .navbar {
-        animation: fadeInUp 1s ease-in-out;
+          animation: fadeInUp 1s ease-in-out;
         }
         @keyframes fadeInUp {
-        from {
-        opacity: 0;
-        transform: translateY(20px);
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
-        to {
-        opacity: 1;
-        transform: translateY(0);
-        }
-        }
-  
       </style>
       <div class="landing-container vh-100 position-relative overflow-hidden d-flex flex-column justify-content-between" style="background-image: url('/images/bglanding.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparant">
