@@ -20,7 +20,7 @@ Pencarian tempat wisata di Indonesia seringkali kurang efisien dan kurang terorg
 <p>2.Pencarian berdasarkan wilayah : Fitur pencarian berbasis wilayah di platform membantu pengguna menemukan destinasi sesuai lokasi dan preferensi budaya.</p>
 
 
-<h3>Preview Aplikasi SAPU </h3>
+<h3>Preview Aplikasi Malala </h3>
 <img src="https://github.com/Chrsnta/Gambar/blob/main/Screnshoot/AWAL.png"width="500">
 <img src="https://github.com/Chrsnta/Gambar/blob/main/Screnshoot/halaman%20dashboard.png"width="500">
 <img src="https://github.com/Chrsnta/Gambar/blob/main/Screnshoot/halaman%20data%20tempat%20wisata.png"width="500">
