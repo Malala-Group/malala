@@ -54,6 +54,8 @@ Route::apiResource('destinations', TouristAttractionController::class)->only([
 ]);
 
 Route::middleware(['auth:sanctum', 'verified', 'role:mitra'])->group(function() {
+    Route::get('destinations/index/mitra', [TouristAttractionController::class, 'indexMitra']);
+    Route::get('destinations/mitra/count', [TouristAttractionController::class, 'indexMitraCount']);
     Route::apiResource('destinations', TouristAttractionController::class)->only([
         'store', 'update', 'destroy'
     ]);

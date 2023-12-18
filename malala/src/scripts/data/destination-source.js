@@ -28,6 +28,14 @@ class DestinationSource {
     return Axios.get(`${API_ENPOINT.DESTINATION}?page=${page}`).then((response) => response.data);
   }
 
+  static async listMitra(page) {
+    return Axios.get(`${API_ENPOINT.DESTINATION}/index/mitra?page=${page}`).then((response) => response.data);
+  }
+
+  static async countListMitra() {
+    return Axios.get(`${API_ENPOINT.DESTINATION}/mitra/count`).then((response) => response.data);
+  }
+
   static async get(id) {
     return Axios.get(`${API_ENPOINT.DESTINATION}/${id}`).then((response) => response.data);
   }
@@ -62,6 +70,7 @@ class DestinationSource {
         }
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       if (error.response.status === 400) {
         swalWithBootstrapButtons.fire({
@@ -87,7 +96,6 @@ class DestinationSource {
       }).then(async (result) => {
         if (result.isConfirmed) {
           await Axios.post(`${API_ENPOINT.DESTINATION}/${destinationId}`, destination).then((response) => {
-            console.log(response);
             if (response.status === 200) {
               swalWithBootstrapButtons.fire({
                 title: 'Success!',
@@ -101,6 +109,7 @@ class DestinationSource {
         }
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       if (error.response.status === 400) {
         swalWithBootstrapButtons.fire({
@@ -139,6 +148,7 @@ class DestinationSource {
         }
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       throw error;
     }
