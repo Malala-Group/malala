@@ -24,7 +24,7 @@ class Footer extends HTMLElement {
           <div class="row my-3 d-flex justify-content-between">
             <div class="col-md-4">
               <img src="/images/logo.png" alt="Company Logo" class="my-2 w-50">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet elementum ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi libero elit, iaculis ut est volutpat, vehicula blandit justo.</p>
+              <p>Malala adalah platform aplikasi berbasis web yang dirancang untuk mempermudah masyarakat dalam menemukan berbagai destinasi wisata di seluruh Indonesia. Selain sebagai alat pencarian untuk pengunjung, Malala juga memiliki tujuan membantu pemilik destinasi pariwisata, khususnya para pelaku Usaha Mikro, Kecil, dan Menengah (UMKM), dalam mempromosikan destinasi wisata mereka kepada masyarakat.</p>
             </div>
             <div class="col-md-4">
               <h5>Contact</h5>

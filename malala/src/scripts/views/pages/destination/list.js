@@ -153,6 +153,7 @@ const ListDestination = {
       </div>
   `;
   },
+
   async afterRender() {
     const user = await AuthSource.checkAccessPage(['mitra']);
     const userNavElement = document.querySelector('#account-menu-trigger a');
@@ -166,11 +167,7 @@ const ListDestination = {
 
   async getDataAndRender(page = 1) {
     try {
-      const user = await AuthSource.checkAccessPage(['mitra']);
-      const userNavElement = document.querySelector('#account-menu-trigger a');
-      userNavElement.textContent = user.name;
-
-      const data = await DestinationSource.list({ page });
+      const data = await DestinationSource.listMitra(page);
       const containerElement = document.querySelector('.list-destination');
       const destinationList = document.createElement('destination-list-table');
       // eslint-disable-next-line max-len

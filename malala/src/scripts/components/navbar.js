@@ -8,7 +8,6 @@ class Navbar extends HTMLElement {
 
   set user(user) {
     this._user = user;
-    console.log(user);
     this.render();
   }
 
@@ -33,7 +32,7 @@ class Navbar extends HTMLElement {
       <!-- Navbar -->
       <nav class="container-fluid">
         <!-- Logo -->
-        <a class="navbar-brand me-auto" href="${CONFIG.BASE_URL}#/destination-list">
+        <a class="navbar-brand me-auto" href="${CONFIG.BASE_URL}#/dashboard">
           <img src="/images/navbar.png" alt="Logo" height="40">
         </a>
 

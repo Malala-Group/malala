@@ -57,6 +57,35 @@ class TouristAttractionController extends BaseApiController
         }
     }
 
+    public function indexMitra(Request $request) 
+    {
+        try {
+            $destinations = $this->touristAttractionModel->where('user_id', Auth::id())->with('images', 'province')->paginate(15);
+            if ($destinations->count() < 1) {
+                throw new \Exception('Data tidak ditemukan', 404);
+            }
+
+            return $this->jsonResponse('success', 'Data tempat wisata', $destinations);
+        } catch (\Exception $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    public function indexMitraCount() 
+    {
+        try {
+            $destinationCount = $this->touristAttractionModel->where('user_id', Auth::id())->count();
+
+            if ($destinationCount < 1) {
+                throw new \Exception('Data tidak ditemukan', 404);
+            }
+
+            return $this->jsonResponse('success', 'Jumlah data tempat wisata', $destinationCount);
+        } catch (\Exception $e) {
+            return $this->handleException($e);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -163,7 +192,7 @@ class TouristAttractionController extends BaseApiController
             if (!$destination) {
                 return $this->jsonResponse('fail', 'Data tidak ditemukan.', null, 404);
             }
-            if ($destination->user_id !== Auth::id) {
+            if ($destination->user_id !== Auth::id()) {
                 return $this->jsonResponse('fail', "You don't have access.", null, 403);
             }
 

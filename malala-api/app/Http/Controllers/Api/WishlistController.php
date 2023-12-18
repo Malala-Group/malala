@@ -65,7 +65,7 @@ class WishlistController extends BaseApiController
     public function show(string $destinationId)
     {
         $user_id = Auth::id();
-        $wishlist = $this->wishlistModel->where('user_id', $user_id)->where('tourist_attraction_id', $destinationId)->with('touristAttractions')->get()->first();
+        $wishlist = $this->wishlistModel->where('user_id', $user_id)->where('tourist_attraction_id', $destinationId)->with('touristAttraction')->get()->first();
         
         return $this->jsonResponse('success', 'Data tempat wisata', $wishlist);
     }

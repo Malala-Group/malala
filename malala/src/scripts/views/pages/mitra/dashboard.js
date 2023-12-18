@@ -1,6 +1,7 @@
 import createSideBar from '../../templates/TmSideBar';
 import AuthSource from '../../../data/auth-source';
 import CONFIG from '../../../globals/config';
+import DestinationSource from '../../../data/destination-source';
 
 const DashboardMitra = {
   async render() {
@@ -148,15 +149,15 @@ const DashboardMitra = {
           <div class="col-md-4">
             <div class="card text-white bg-danger" style="max-width: 15rem;">
               <div class="row">
-                <div class="col ms-2">
-                  <h3 class="card-title">44</h3>
-                  <p class="card-text">data Wisata </p>
+                <div class="col ms-2 p-3">
+                  <h3 class="card-title destination-count"></h3>
+                  <p class="card-text">Data Wisata </p>
                 </div>
                 <div class="col text-end me-4">
                   <i class="bi bi-people-fill" style="font-size: 3rem;"></i>
                 </div>
               </div>
-              <a href="#" class="card-footer small-box-footer text-white"> More info <i class="bi bi-arrow-right-circle-fill"></i>
+              <a href="${CONFIG.BASE_URL}#/destination-list" class="card-footer small-box-footer text-white"> More info <i class="bi bi-arrow-right-circle-fill"></i>
               </a>
             </div>
           </div>
@@ -169,6 +170,10 @@ const DashboardMitra = {
     const user = await AuthSource.checkAccessPage(['mitra']);
     const userNavElement = document.querySelector('#account-menu-trigger a');
     userNavElement.textContent = user.name;
+
+    const destinationCount = await DestinationSource.countListMitra();
+    const destinationCountElement = document.querySelector('.destination-count');
+    destinationCountElement.textContent = destinationCount.data;
   },
 };
 
