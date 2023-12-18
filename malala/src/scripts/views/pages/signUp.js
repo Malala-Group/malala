@@ -104,13 +104,13 @@ const SignUp = {
             <div class="mb-3">
               <div class="input-group">
                 <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" required>
-                <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="bi bi-eye"></i></button>
               </div>
             </div>
             <div class="mb-3">
               <div class="input-group">
                 <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" placeholder="Re Type Password" required>
-                <button class="btn btn-outline-secondary" type="button" id="togglePassword">Show</button>
+                <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword"><i class="bi bi-eye"></i></button>
               </div>
             </div>
             <div class="mb-3 form-check">
@@ -126,6 +126,26 @@ const SignUp = {
   },
 
   async afterRender() {
+    const passwordInput = $('#inputPassword');
+    const togglePasswordButton = $('#togglePassword');
+
+    togglePasswordButton.on('click', () => {
+      const passwordType = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+      passwordInput.attr('type', passwordType);
+
+      togglePasswordButton.find('i').toggleClass('bi-eye bi-eye-slash');
+    });
+
+    const confirmPasswordInput = $('#passwordConfirmation');
+    const toggleConfirmPasswordButton = $('#toggleConfirmPassword');
+
+    toggleConfirmPasswordButton.on('click', () => {
+      const passwordType = confirmPasswordInput.attr('type') === 'password' ? 'text' : 'password';
+      confirmPasswordInput.attr('type', passwordType);
+
+      toggleConfirmPasswordButton.find('i').toggleClass('bi-eye bi-eye-slash');
+    });
+
     $('#formRegister').on('submit', async (event) => {
       event.preventDefault();
 

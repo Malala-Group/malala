@@ -229,7 +229,7 @@ class TouristAttractionController extends BaseApiController
             if (!$destination) {
                 return $this->jsonResponse('fail', 'Data tidak ditemukan.', null, 404);
             }
-            if ($destination->user_id !== Auth::id) {
+            if ($destination->user_id !== Auth::id()) {
                 return $this->jsonResponse('fail', "You don't have access.", null, 403);
             }
 

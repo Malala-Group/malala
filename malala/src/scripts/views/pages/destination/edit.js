@@ -184,7 +184,7 @@ const EditDestination = {
               <input type="text" class="form-control" id="inputContact" aria-describedby="inputContact" placeholder="+62"  value="+62">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="reset" class="btn btn-danger">Cancel</button>
+            <a href="${CONFIG.BASE_URL}#/destination-list" class="btn btn-danger">Cancel</a>
           </form>
         </div>
       </div>
